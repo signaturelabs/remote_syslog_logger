@@ -48,16 +48,12 @@ Once you've made your great commits:
  4. Create a Pull Request or an [Issue][is] with a link to your branch
  5. That's it!
 
-You might want to checkout Resque's [Contributing][cb] wiki page for information
-on coding standards, new features, etc.
-
 
 # License
 
 Copyright (c) 2011 Eric Lindvall. See [LICENSE][] for details.
 
 
-[cb]: https://wiki.github.com/defunkt/resque/contributing
 [fk]: http://help.github.com/forking/
 [is]: https://github.com/papertrail/remote_syslog_logger/issues
 [LICENSE]: https://github.com/papertrail/remote_syslog_logger/blob/master/LICENSE
