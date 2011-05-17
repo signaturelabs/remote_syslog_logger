@@ -48,7 +48,7 @@ class TestRemoteSyslogLogger < Test::Unit::TestCase
       @logger.info "This will never be received"
     end
     message, addr = *@socket.recvfrom(1024)
-    assert_match /SocketError/, message
+    assert_match /\ error:/, message
 
     assert_raise SocketError do
       @logger = RemoteSyslogLogger.new('this_is_an_invalid_url', @server_port,
@@ -57,7 +57,7 @@ class TestRemoteSyslogLogger < Test::Unit::TestCase
       @logger.info "This will never be received"
     end
     message, addr = *@socket.recvfrom(1024)
-    assert_not_nil message
+    assert_match /\ error:/, message
   end
 
 end

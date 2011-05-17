@@ -30,7 +30,7 @@ module RemoteSyslogLogger
           @socket.send(packet.assemble, 0, @remote_hostname, @remote_port)
         end
       rescue
-        @backuplog.error($!) if @backuplog
+        @backuplog.error("#{self.class} error: #{$!}") if @backuplog
         raise $! if @whinyerrors
       end
     end
