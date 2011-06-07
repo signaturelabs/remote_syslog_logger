@@ -26,38 +26,4 @@ class TestRemoteSyslogLogger < Test::Unit::TestCase
     assert_match /This is the second line/, message
   end
 
-  def test_whinyerrors
-    assert_nothing_raised do
-      @logger = RemoteSyslogLogger.new('this_is_an_invalid_url', @server_port,
-        :whinyerrors => false)
-      @logger.info "This will never be received"
-    end
-
-    assert_raise SocketError do
-      @logger = RemoteSyslogLogger.new('this_is_an_invalid_url', @server_port,
-        :whinyerrors => true)
-      @logger.info "This will never be received"
-    end
-  end
-
-  def test_backuplog
-    assert_nothing_raised do
-      @logger = RemoteSyslogLogger.new('this_is_an_invalid_url', @server_port,
-        :backuplog => RemoteSyslogLogger.new('127.0.0.1', @server_port),
-        :whinyerrors => false)
-      @logger.info "This will never be received"
-    end
-    message, addr = *@socket.recvfrom(1024)
-    assert_match /\ error:/, message
-
-    assert_raise SocketError do
-      @logger = RemoteSyslogLogger.new('this_is_an_invalid_url', @server_port,
-        :backuplog => RemoteSyslogLogger.new('127.0.0.1', @server_port),
-        :whinyerrors => true)
-      @logger.info "This will never be received"
-    end
-    message, addr = *@socket.recvfrom(1024)
-    assert_match /\ error:/, message
-  end
-
 end
