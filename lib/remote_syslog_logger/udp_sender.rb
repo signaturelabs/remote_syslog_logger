@@ -21,16 +21,16 @@ module RemoteSyslogLogger
     end
     
     def transmit(message)
-      begin
-        message.split(/\r?\n/).each do |line|
+      message.split(/\r?\n/).each do |line|
+        begin
           next if line =~ /^\s*$/
           packet = @packet.dup
           packet.content = line
           @socket.send(packet.assemble, 0, @remote_hostname, @remote_port)
+        rescue
+          $stderr.puts "#{self.class.name} error: #{$!.class.name}: #{$!} (log msg: #{line})"
+          raise $! if @whinyerrors
         end
-      rescue
-        STDERR.puts "#{self.class} error: #{$!}"
-        raise $! if @whinyerrors
       end
     end
     
